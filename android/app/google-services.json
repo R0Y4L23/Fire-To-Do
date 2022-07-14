@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "561693405209",
+    "project_id": "fir-tut-1ef88",
+    "storage_bucket": "fir-tut-1ef88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561693405209:android:a227bbef34ae0095f7ba88",
+        "android_client_info": {
+          "package_name": "com.example.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561693405209-019sd3j2r43nie9p18reb0gnt2i6a2cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXYkZlzaCP7U7nhP0sBCY06JU9_OOAvkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561693405209-019sd3j2r43nie9p18reb0gnt2i6a2cl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561693405209-mna103jqak549lf3omt8464cm6v9p6k0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTest2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
