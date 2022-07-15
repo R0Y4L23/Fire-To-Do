@@ -48,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String nowEditing = "";
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   TextEditingController todoController = TextEditingController();
+  TextEditingController modifyTodoController = TextEditingController();
 
   List Todos = [];
 
@@ -153,39 +156,83 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Todos.isNotEmpty
                   ? ListView(
                       children: Todos.map((todo) {
-                        return ListTile(
-                            title: Text(todo['title']),
-                            subtitle: Text("Date Added : " + todo['date']),
-                            trailing: SizedBox(
-                              width: getWidth(20),
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () {
-                                      deleteTodo(todo['id']);
-                                    },
-                                  ),
-                                  InkWell(
-                                      onTap: () {
-                                        addOrUpdateTodo(
-                                            todo['id'],
-                                            todo['title'],
-                                            todo['date'],
-                                            !todo['done']);
+                        if (nowEditing != todo.id) {
+                          return ListTile(
+                              title: Text(todo['title']),
+                              subtitle: Text("Date Added : " + todo['date']),
+                              trailing: SizedBox(
+                                width: getWidth(30),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        deleteTodo(todo['id']);
                                       },
-                                      child: Icon(
-                                        Icons.check_circle,
-                                        color: todo['done']
-                                            ? Colors.green
-                                            : Colors.grey,
-                                      )),
-                                ],
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          addOrUpdateTodo(
+                                              todo['id'],
+                                              todo['title'],
+                                              todo['date'],
+                                              !todo['done']);
+                                        },
+                                        child: Icon(
+                                          Icons.check_circle,
+                                          color: todo['done']
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        )),
+                                    SizedBox(
+                                      width: getWidth(3),
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          if (nowEditing == "") {
+                                            setState(() {
+                                              nowEditing = todo['id'];
+                                            });
+                                          }
+                                        },
+                                        child: Icon(Icons.edit,
+                                            color: nowEditing == ""
+                                                ? Colors.blue
+                                                : Colors.grey)),
+                                  ],
+                                ),
+                              ));
+                        } else {
+                          modifyTodoController.text = todo['title'];
+                          return ListTile(
+                              title: TextField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Modify Here...',
+                                ),
+                                controller: modifyTodoController,
                               ),
-                            ));
+                              trailing: IconButton(
+                                onPressed: () {
+                                  String dateString = DateTime.now().toString();
+                                  addOrUpdateTodo(
+                                      nowEditing,
+                                      modifyTodoController.text,
+                                      dateString.substring(0, 10),
+                                      todo['done']);
+                                  setState(() {
+                                    nowEditing = "";
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                ),
+                              ));
+                        }
                       }).toList(),
                     )
                   : Center(
